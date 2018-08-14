@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Numeric methods</title>
+</h:head>
+
+<h:body>
+	<h1 class="title ui-widget-header ui-corner-all">#{msg['index.title']}</h1>
+
+	<h:form id="form">
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+		<h:panelGrid columns="2" style="width:100%">
+			<h:panelGrid id="functionPanel" columns="2">
+				<p:outputLabel for="methodType" value="#{msg['index.method.type']}:" />
+				<h:selectOneMenu id="methodType" value="#{method.methodType}">
+					<f:selectItems value="#{method.numericMethodTypes}" var="type"
+						itemValue="#{type}" itemLabel="#{msg[type.label]}" />
+					<f:ajax render="functionLabel" />
+					<f:ajax render="dataTables" />
+					<p:ajax listener="#{method.onMethodTypeChange}" update="function" />
+				</h:selectOneMenu>
+
+				<h:panelGroup id="functionLabel">
+					<p:outputLabel id="fLabel" for="function"
+						value="#{msg['index.function.f']}"
+						rendered="#{'ITERATION' ne method.methodType}" />
+					<p:outputLabel id="phiLabel" for="function"
+						value="#{msg['index.function.phi']}"
+						rendered="#{'ITERATION' eq method.methodType}" />
+				</h:panelGroup>
+				<p:inputText value="#{method.functionString}" id="function"
+					required="true" />
+
+				<p:outputLabel for="intervalStart"
+					value="#{msg['index.interval.start']}:" />
+				<p:inputNumber value="#{method.intervalStart}" id="intervalStart"
+					decimalPlaces="1" required="true" />
+
+				<p:outputLabel for="intervalEnd"
+					value="#{msg['index.interval.end']}:" />
+				<p:inputNumber value="#{method.intervalEnd}" id="intervalEnd"
+					decimalPlaces="1" required="true" />
+
+				<p:outputLabel for="tolerance" value="#{msg['index.tolerance']}:" />
+				<p:inputNumber value="#{method.tolerance}" id="tolerance"
+					decimalPlaces="6" required="true" />
+
+
+				<p:commandButton value="#{msg['index.button.compute']}"
+					actionListener="#{method.compute}" update="dataTables, chart">
+				</p:commandButton>
+			</h:panelGrid>
+
+			<h:panelGroup id="chart">
+				<p:chart type="line" model="#{method.chart}"
+					rendered="#{method.showData}" style="width:500px; height:500px;" />
+			</h:panelGroup>
+
+		</h:panelGrid>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:outputText value="#{msg['index.computationProgress']}" />
+		</p:dialog>
+
+		<h:panelGroup id="dataTables">
+			<p:dataTable id="bisectionDT" var="item"
+				rendered="#{method.showData and 'BISECTION' eq method.methodType and method.bisectionItems != null}"
+				value="#{method.bisectionItems}" selectionMode="single"
+				selection="#{method.selectedBisectionItem}" rowKey="#{item.step}"
+				scrollable="true" scrollHeight="300">
+				<f:facet name="header">
+					<h:outputText value="#{msg['index.method.bisection.table.title']}" />
+				</f:facet>
+				<p:ajax event="rowSelect" listener="#{method.onBisectionRowSelect}"
+					update=":form:chart" />
+				<p:column headerText="#{msg['index.method.table.step']}">
+					<h:outputText value="#{item.step}" />
+				</p:column>
+				<p:column headerText="a">
+					<h:outputText value="#{item.start}" />
+				</p:column>
+				<p:column headerText="b">
+					<h:outputText value="#{item.end}" />
+				</p:column>
+				<p:column headerText="(a+b)/2">
+					<h:outputText value="#{item.half}" />
+				</p:column>
+				<p:column headerText="f(a)">
+					<h:outputText value="#{item.fStart}" />
+				</p:column>
+				<p:column headerText="f(b)">
+					<h:outputText value="#{item.fEnd}" />
+				</p:column>
+				<p:column headerText="f((a+b)/2)">
+					<h:outputText value="#{item.fHalf}" />
+				</p:column>
+			</p:dataTable>
+			<p:dataTable id="iterationDT" var="item"
+				rendered="#{method.showData and 'ITERATION' eq method.methodType and method.iterationItems != null}"
+				value="#{method.iterationItems}" selectionMode="single"
+				selection="#{method.selectedIterationItem}" rowKey="#{item.step}"
+				scrollable="true" scrollHeight="300">
+				<f:facet name="header">
+					<h:outputText value="#{msg['index.method.iteration.table.title']}" />
+				</f:facet>
+				<p:ajax event="rowSelect" listener="#{method.onIterationRowSelect}"
+					update=":form:chart" />
+				<p:column headerText="#{msg['index.method.table.step']}">
+					<h:outputText value="#{item.step}" />
+				</p:column>
+				<p:column headerText="x">
+					<h:outputText value="#{item.point}" />
+				</p:column>
+				<p:column headerText="f(x)">
+					<h:outputText value="#{item.fPoint}" />
+				</p:column>
+			</p:dataTable>
+			<p:dataTable id="newtonDT" var="item"
+				rendered="#{method.showData and 'NEWTON' eq method.methodType and method.newtonItems != null}"
+				value="#{method.newtonItems}" selectionMode="single"
+				selection="#{method.selectedNewtonItem}" rowKey="#{item.step}"
+				scrollable="true" scrollHeight="300">
+				<f:facet name="header">
+					<h:outputText value="#{msg['index.method.newton.table.title']}" />
+				</f:facet>
+				<p:ajax event="rowSelect" listener="#{method.onNewtonRowSelect}"
+					update=":form:chart" />
+				<p:column headerText="#{msg['index.method.table.step']}">
+					<h:outputText value="#{item.step}" />
+				</p:column>
+				<p:column headerText="x">
+					<h:outputText value="#{item.point}" />
+				</p:column>
+				<p:column headerText="f(x)">
+					<h:outputText value="#{item.fPoint}" />
+				</p:column>
+				<p:column headerText="f'(x)">
+					<h:outputText value="#{item.derivatePoint}" />
+				</p:column>
+				<p:column headerText="x-f'(x)/f(x)">
+					<h:outputText value="#{item.nextPoint}" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,16 @@
+sk/tuke/numericmethods/entities/NewtonDataTableItem.class
+sk/tuke/numericmethods/tools/ComputationHelper.class
+sk/tuke/numericmethods/methods/Newton.class
+sk/tuke/numericmethods/entities/Extremes.class
+sk/tuke/numericmethods/beans/MethodBean.class
+sk/tuke/numericmethods/entities/IterationDataTableItem.class
+sk/tuke/numericmethods/enums/NumericMethodType.class
+sk/tuke/numericmethods/entities/DataTableItem.class
+sk/tuke/numericmethods/entities/FunctionEvaluationResult.class
+sk/tuke/numericmethods/tools/FunctionEvaluator.class
+sk/tuke/numericmethods/entities/BisectionDataTableItem.class
+sk/tuke/numericmethods/methods/Bisection.class
+sk/tuke/numericmethods/beans/MethodBean$1.class
+sk/tuke/numericmethods/tools/MethodConstraints.class
+sk/tuke/numericmethods/tools/FunctionEvaluator$1.class
+sk/tuke/numericmethods/methods/Iteration.class

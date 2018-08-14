@@ -1,0 +1,14 @@
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/DataTableItem.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/methods/Newton.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/methods/Bisection.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/FunctionEvaluationResult.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/methods/Iteration.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/tools/FunctionEvaluator.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/beans/MethodBean.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/tools/MethodConstraints.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/tools/ComputationHelper.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/Extremes.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/BisectionDataTableItem.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/NewtonDataTableItem.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/enums/NumericMethodType.java
+/Users/marosik/www/diplomovka/NumericMethods_new/src/main/java/sk/tuke/numericmethods/entities/IterationDataTableItem.java
